@@ -46,7 +46,9 @@ module.exports = function(app, passport) {
     app.post('/sendMessage', function (req, res) {
           console.log("BOBOBOBOBOOBOB"); 
 
-          res.end();
+          res.json({
+            rob: "is cool"
+          });
     });
 
 
