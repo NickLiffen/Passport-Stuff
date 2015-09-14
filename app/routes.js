@@ -42,12 +42,9 @@ module.exports = function(app, passport) {
         failureFlash : true // allow flash messages
     }));
 
-  // process the signup form
-    app.post('/sendMessage', passport.authenticate('send-message', {
-        successRedirect : '/signup', // redirect to the secure profile section
-        failureRedirect : '/signup', // redirect back to the signup page if there is an error
-        failureFlash : true // allow flash messages
-    }));
+      app.post('/sendMessage', function (req, res) {
+                console.log("Ready to do something");
+    });
 
 
     // =====================================
