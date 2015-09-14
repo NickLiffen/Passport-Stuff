@@ -43,7 +43,7 @@ module.exports = function(app, passport) {
     }));
 
       app.post('/sendMessage', function (req, res) {
-                console.log("Ready to do something");
+            return done(null, false, req.flash('signupMessage', 'Email Sent :)'));
     });
 
 
