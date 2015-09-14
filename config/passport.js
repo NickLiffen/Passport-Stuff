@@ -272,56 +272,6 @@ module.exports = function(passport) {
 
         }));
 
-
-// =========================================================================
-    // SEND MESSAGE ============================================================
-    // =========================================================================
-    // we are using named strategies since we have one for login and one for signup
-    // by default, if there was no name, it would just be called 'local'
-
-    passport.use('send-message', new LocalStrategy({
-            // by default, local strategy uses username and password, we will override with email
-            numberField: 'number',
-            passReqToCallback: true // allows us to pass back the entire request to the callback
-        },
-
-        function(req, number, done) {
-
-            // asynchronous
-            // User.findOne wont fire unless data is sent back
-            process.nextTick(function() {
-
-                                    // Twilio Credentials 
-                    var accountSid = 'AC21b2ea7c36b412a7e9e4eb945c296581'; 
-                    var authToken = 'f273745a01868646a98cd01a5cb835be'; 
-                     
-                    //require the Twilio module and create a REST client 
-                    var client = require('twilio')(accountSid, authToken); 
-                     
-                    client.messages.create({ 
-                        to: "+447981691495", 
-                        from: "+441243689165", 
-                        body: "Hello There, Welcome to our app",   
-                    }, function(err, message) { 
-                        console.log(message.sid); 
-                    });
-
-                    console.log(client);
-
-                    // check to see if theres already a user with that email
-                    if (client) {
-                        return done(null, false, req.flash('signupMessage', 'That email is already taken.'));
-                    } else {
-                        return done(null, false, req.flash('signupMessage', 'Sent Message.'));
-
-                };
-
-            });
-
-        };
-
-    }));
-
     // =========================================================================
     // LOCAL LOGIN =============================================================
     // =========================================================================
