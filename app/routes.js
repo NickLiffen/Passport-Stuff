@@ -42,8 +42,9 @@ module.exports = function(app, passport) {
         failureFlash : true // allow flash messages
     }));
 
-      app.post('/sendMessage', function (req, res) {
-          return alert("Hello There");
+
+    app.post('/sendMessage', function (req, res) {
+          console.log("BOBOBOBOBOOBOB");
     });
 
 
