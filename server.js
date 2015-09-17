@@ -1,22 +1,23 @@
 // server.js
 
+// set up ======================================================================
 // get all the tools we need
-var express  		= require('express');
-var app      		= express();
-var port     		= process.env.PORT || 8080;
-var mongoose 		= require('mongoose');
-var passport 		= require('passport');
-var flash    		= require('connect-flash');
-var morgan       	= require('morgan');
-var cookieParser 	= require('cookie-parser');
-var bodyParser   	= require('body-parser');
-var session      	= require('express-session');
+var express  = require('express');
+var app      = express();
+var port     = process.env.PORT || 8080;
+var mongoose = require('mongoose');
+var passport = require('passport');
+var flash    = require('connect-flash');
 
-//Get our database File
+var morgan       = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser   = require('body-parser');
+var session      = require('express-session');
+
 var configDB = require('./config/database.js');
 
-// connect to our database
-mongoose.connect(configDB.url); 
+// configuration ===============================================================
+mongoose.connect(configDB.url); // connect to our database
 
 require('./config/passport')(passport); // pass passport for configuration
 
@@ -28,7 +29,7 @@ app.use(bodyParser()); // get information from html forms
 app.set('view engine', 'ejs'); // set up ejs for templating
 
 // required for passport
-app.use(session({ secret: 'nickliffenisthebest' })); // session secret
+app.use(session({ secret: 'nick1994' })); // session secret
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
