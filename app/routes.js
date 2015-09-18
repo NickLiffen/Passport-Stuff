@@ -1,4 +1,5 @@
 var User            = require('../app/models/user');
+var Class            = require('../app/models/class');
 
 // app/routes.js
 module.exports = function(app, passport) {
@@ -6,14 +7,14 @@ module.exports = function(app, passport) {
 
 
 
-    // HOME PAGE (with login links) 
+    // HOME PAGE (with login links)
     app.get('/', function(req, res) {
         res.render('index.ejs'); // load the index.ejs file
     });
 
     //FIRST TIME LOGIN
      app.get('/validate', function(req, res) {
-        res.render('validate.ejs', { message: req.flash('loginMessage') }); 
+        res.render('validate.ejs', { message: req.flash('loginMessage') });
     });
 
     app.post('/validate', passport.authenticate('local-validate', {
@@ -25,42 +26,36 @@ module.exports = function(app, passport) {
 
     // VALIDATE CODE
     app.get('/validateCode', function(req, res) {
-        res.render('validateCode.ejs', { message: req.flash('loginMessage') }); 
+        res.render('validateCode.ejs', { message: req.flash('loginMessage') });
     });
 
     app.post('/validateCode', function(req, res, done){
-
         if(req.body.code == '670987856'){
-
             var email = req.user.local.email;
             var id    = req.user.id;
-
-            console.log("Getting Ready To Update.....")
 
          User.findByIdAndUpdate(id, { $set: { 'local.firstTime' : true }}, function (err, user) {
             if (err) return handleError(err);
                 console.log(user);
             });
-
          res.render('validateSuccess.ejs');
-
         }
         else{
-            //return done(null, false, req.flash('loginMessage', 'You have entered the wrong code')); 
+            req.flash('loginMessage', 'You have entered the wrong code');
+            res.redirect('/validateCode');
         }
-
      });
 
 
 
     //FIRST TIME LOGIN
      app.get('/validateSuccess', function(req, res) {
-        res.render('validateSuccess.ejs'); 
+        res.render('validateSuccess.ejs');
     });
 
-    // LOGIN 
+    // LOGIN
     app.get('/login', function(req, res) {
-        res.render('login.ejs', { message: req.flash('loginMessage') }); 
+        res.render('login.ejs', { message: req.flash('loginMessage') });
     });
 
   app.post('/login', passport.authenticate('local-login', {
@@ -81,14 +76,14 @@ module.exports = function(app, passport) {
         failureFlash : true // allow flash messages
     }));
 
-    // PROFILE SECTION 
+    // PROFILE SECTION
     app.get('/profile', isLoggedIn, function(req, res) {
         res.render('profile.ejs', {
             user : req.user // get the user out of session and pass to template
         });
     });
 
-    // LOGOUT 
+    // LOGOUT
     app.get('/logout', function(req, res) {
         req.logout();
         res.redirect('/');
@@ -98,7 +93,7 @@ module.exports = function(app, passport) {
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
 
-    // if user is authenticated in the session, carry on 
+    // if user is authenticated in the session, carry on
     if (req.isAuthenticated())
         return next();
 

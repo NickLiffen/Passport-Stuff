@@ -10,7 +10,7 @@ var User            = require('../app/models/user');
 module.exports = function(passport) {
 
 
-    // passport session setup 
+    // passport session setup
 
     // used to serialize the user for the session
     passport.serializeUser(function(user, done) {
@@ -24,7 +24,7 @@ module.exports = function(passport) {
         });
     });
 
-    // LOCAL SIGNUP 
+    // LOCAL SIGNUP
 
     passport.use('local-signup', new LocalStrategy({
         // by default, local strategy uses username and password, we will override with email
@@ -65,7 +65,7 @@ module.exports = function(passport) {
                 });
             }
 
-        });    
+        });
 
         });
 
@@ -97,12 +97,12 @@ module.exports = function(passport) {
 
             // if the user is found but the password is wrong
             if (!user.validPassword(password))
-                return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); 
+                return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
 
             if(user.local.firstTime == false)
-                return done(null, false, req.flash('loginMessage', 'Oops! You havent validated yet.')); 
+                return done(null, false, req.flash('loginMessage', 'Oops! You havent validated yet.'));
 
-    
+
 
                 // create the loginMessage and save it to session as flashdata
             // all is well, return successful user
@@ -136,10 +136,10 @@ module.exports = function(passport) {
 
                 // if the user is found but the password is wrong
                 if (!user.validPassword(password))
-                    return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.')); 
+                    return done(null, false, req.flash('loginMessage', 'Oops! Wrong password.'));
 
                 if(user.local.firstTime == true)
-                return done(null, false, req.flash('loginMessage', 'You have already validated please login')); 
+                return done(null, false, req.flash('loginMessage', 'You have already validated please login'));
 
                     // create the loginMessage and save it to session as flashdata
                 // all is well, return successful user

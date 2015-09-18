@@ -9,7 +9,7 @@ var userSchema = mongoose.Schema({
     local            : {
         email        : String,
         password     : String,
-        firstTime	 : { type: Boolean, default: false }, 
+        firstTime	 : { type: Boolean, default: false },
     }
 
 });
